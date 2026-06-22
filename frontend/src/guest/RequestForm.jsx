@@ -15,7 +15,7 @@ export default function RequestForm() {
     
     setSubmitting(true);
     try {
-      const res = await fetch('http://localhost:3001/api/requests', {
+      const res = await fetch((import.meta.env.PROD ? '' : 'http://localhost:3001') + '/api/requests', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ room_id: room.id, message })

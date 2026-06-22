@@ -1,7 +1,19 @@
 const sqlite3 = require('sqlite3').verbose();
 const path = require('path');
 
-const dbPath = path.resolve(__dirname, 'hotel.sqlite');
+const fs = require('fs');
+
+let dbPath = path.resolve(__dirname, 'hotel.sqlite');
+
+// Vercel serverless functions have a read-only filesystem, except for /tmp
+if (process.env.VERCEL) {
+    const tmpPath = '/tmp/hotel.sqlite';
+    // Copy the seeded database to /tmp if it doesn't exist there yet
+    if (!fs.existsSync(tmpPath) && fs.existsSync(dbPath)) {
+        fs.copyFileSync(dbPath, tmpPath);
+    }
+    dbPath = tmpPath;
+}
 
 const db = new sqlite3.Database(dbPath, (err) => {
     if (err) {

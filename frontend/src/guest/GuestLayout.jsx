@@ -10,7 +10,7 @@ export default function GuestLayout() {
   const [error, setError] = useState('');
 
   useEffect(() => {
-    fetch(`http://localhost:3001/api/room/${qr_code}`)
+    fetch((import.meta.env.PROD ? '' : 'http://localhost:3001') + `/api/room/${qr_code}`)
       .then(res => {
         if (!res.ok) throw new Error('Invalid QR Code');
         return res.json();

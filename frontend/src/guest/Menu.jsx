@@ -12,7 +12,7 @@ export default function Menu() {
   const [ordering, setOrdering] = useState(false);
 
   useEffect(() => {
-    fetch('http://localhost:3001/api/menu')
+    fetch((import.meta.env.PROD ? '' : 'http://localhost:3001') + '/api/menu')
       .then(res => res.json())
       .then(data => {
         setMenuItems(data);
@@ -42,7 +42,7 @@ export default function Menu() {
     const items = Object.values(cart).map(c => ({ menu_id: c.item.id, quantity: c.quantity }));
     
     try {
-      const res = await fetch('http://localhost:3001/api/orders', {
+      const res = await fetch((import.meta.env.PROD ? '' : 'http://localhost:3001') + '/api/orders', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ room_id: room.id, items })

@@ -13,10 +13,10 @@ export default function Dashboard() {
     setLoading(true);
     try {
       const [ordersRes, requestsRes, feedbackRes, roomsRes] = await Promise.all([
-        fetch('http://localhost:3001/api/orders'),
-        fetch('http://localhost:3001/api/requests'),
-        fetch('http://localhost:3001/api/feedback'),
-        fetch('http://localhost:3001/api/rooms')
+        fetch((import.meta.env.PROD ? '' : 'http://localhost:3001') + '/api/orders'),
+        fetch((import.meta.env.PROD ? '' : 'http://localhost:3001') + '/api/requests'),
+        fetch((import.meta.env.PROD ? '' : 'http://localhost:3001') + '/api/feedback'),
+        fetch((import.meta.env.PROD ? '' : 'http://localhost:3001') + '/api/rooms')
       ]);
       const [ordersData, requestsData, feedbackData, roomsData] = await Promise.all([
         ordersRes.json(),
@@ -41,7 +41,7 @@ export default function Dashboard() {
   }, []);
 
   const updateOrderStatus = async (id, status) => {
-    await fetch(`http://localhost:3001/api/orders/${id}`, {
+    await fetch((import.meta.env.PROD ? '' : 'http://localhost:3001') + `/api/orders/${id}`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ status })
@@ -50,7 +50,7 @@ export default function Dashboard() {
   };
 
   const updateRequestStatus = async (id, status) => {
-    await fetch(`http://localhost:3001/api/requests/${id}`, {
+    await fetch((import.meta.env.PROD ? '' : 'http://localhost:3001') + `/api/requests/${id}`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ status })

@@ -20,7 +20,7 @@ export default function FeedbackForm() {
     
     setSubmitting(true);
     try {
-      const res = await fetch('http://localhost:3001/api/feedback', {
+      const res = await fetch((import.meta.env.PROD ? '' : 'http://localhost:3001') + '/api/feedback', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ room_id: room.id, rating, comment })
