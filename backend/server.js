@@ -20,6 +20,11 @@ app.get('/health', (req, res) => {
     res.json({ status: 'ok' });
 });
 
+// Root route so Vercel doesn't show 404 on the main page
+app.get('/', (req, res) => {
+    res.json({ message: 'QR Hotel API is running perfectly!' });
+});
+
 if (process.env.NODE_ENV !== 'production' && !process.env.VERCEL) {
     app.listen(PORT, () => {
         console.log(`Server is running on port ${PORT}`);
